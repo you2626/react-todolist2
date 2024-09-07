@@ -1,35 +1,151 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect, ChangeEvent } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+interface Todo {
+  id: number;
+  title: string;
+  status: 'notStarted' | 'inProgress' | 'done';
+}
+
+type Filter = 'all' | 'notStarted' | 'inProgress' | 'done';
+
+
+const App = () => {
+  
+  const [todos, setTodos] = useState<Todo[]>([
+    { id: 1, title: '買い物に行く', status: 'done' },
+    { id: 2, title: '勉強する', status: 'notStarted' },
+    { id: 3, title: '企画書の提出', status: 'inProgress' }
+  ]);
+  const [todoTitle, setTodoTitle] = useState<string>('');
+  const [todoId, setTodoId] = useState<number>(todos.length + 1);
+  const [filteredTodos, setFilteredTodos] = useState<Todo[]>([])
+
+  const [filter, setFilter] = useState<Filter>('all')
+  const [isEditable, setIsEditable] = useState<boolean>(false)
+  const [editId, setEditId] = useState<number | undefined>(undefined);
+  const [newTitle, setNewTitle] = useState<string>('');
+
+  const handleAddFormChanges = (e:ChangeEvent<HTMLInputElement>) => {
+    setTodoTitle(e.target.value);
+  };
+
+  const handleEditFormChanges = (e:ChangeEvent<HTMLInputElement>) => {
+    setNewTitle(e.target.value)
+  };
+
+  const resetFormInput = () => {
+    setTodoTitle('');
+  };
+
+  const handleOpenEditForm = (todo:Todo) => {
+    setIsEditable(true);
+    setEditId(todo.id);
+    setNewTitle(todo.title);
+  }
+
+  const handleCloseEditForm = () => {
+    setIsEditable(false)
+    setEditId(undefined);
+  }
+
+  const handleAddTodo = () => {
+    setTodos([...todos, { id: todoId, title: todoTitle, status: 'notStarted' }]);
+    setTodoId(todoId + 1);
+    resetFormInput();
+  };
+
+  const handleDeleteTodo = (targetTodo:Todo) => {
+    setTodos(todos.filter((todo) => todo.id !== targetTodo.id));
+  };
+
+  const handleEditTodo = () => {
+    const newTodos = todos.map((todo) => ({ ...todo }))
+
+    setTodos(() =>
+      newTodos.map((todo) =>
+        todo.id === editId ? { ...todo, title: newTitle } : todo
+      )
+    );
+    setNewTitle('');
+    handleCloseEditForm();
+  };
+
+  const handleStatusChange = (id:number , e:ChangeEvent<HTMLSelectElement>) => {
+    const newStatus =e.target.value as Todo["status"];
+    setTodos(todos.map((todo) => 
+      todo.id === id ? { ...todo, status: newStatus } : todo
+      ));
+  };
+
+  useEffect(() => {
+    const filteringTodos = () => {
+      switch (filter) {
+        case 'notStarted':
+          setFilteredTodos(todos.filter((todo) => todo.status === 'notStarted'))
+          break
+        case 'inProgress':
+          setFilteredTodos(todos.filter((todo) => todo.status === 'inProgress'))
+          break
+        case 'done':
+          setFilteredTodos(todos.filter((todo) => todo.status === 'done'))
+          break
+        default:
+          setFilteredTodos(todos)
+      }
+    }
+    filteringTodos()
+  }, [filter, todos])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {isEditable ? (
+        <>
+          <input
+            type="text"
+            label="新しいタイトル"
+            value={newTitle}
+            onChange={handleEditFormChanges}
+          />
+          <button onClick={handleEditTodo}>編集を保存</button>
+          <button onClick={handleCloseEditForm}>キャンセル</button>
+        </>
+      ) : (
+        <>
+        <input
+            type="text"
+            value={todoTitle}
+            onChange={handleAddFormChanges}
+          />
+          <button onClick={handleAddTodo}>作成</button>
+        </>
+      )}
+
+      <select value={filter} onChange={(e) => setFilter(e.target.value as Filter)}>
+        <option value="all">すべて</option>
+        <option value="notStarted">未着手</option>
+        <option value="inProgress">作業中</option>
+        <option value="done">完了</option>
+      </select>
+
+      <ul>
+        {filteredTodos.map((todo) => (
+          <li key={todo.id}>
+            <span>{todo.title}</span>
+            <select
+              value={todo.status}
+              onChange={(e) => handleStatusChange(todo.id, e)}
+            >
+              <option value="notStarted">未着手</option>
+              <option value="inProgress">作業中</option>
+              <option value="done">完了</option>
+            </select>
+            <button onClick={() => handleOpenEditForm(todo)}>編集</button>
+            <button onClick={() => handleDeleteTodo(todo)}>削除</button>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
 
-export default App
+export default App;

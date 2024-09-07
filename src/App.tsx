@@ -102,7 +102,6 @@ const App = () => {
         <>
           <input
             type="text"
-            label="新しいタイトル"
             value={newTitle}
             onChange={handleEditFormChanges}
           />

@@ -1,4 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
+import Title from './components/Title';
+import InputForm from './components/InputForm';
 
 interface Todo {
   id: number;
@@ -97,8 +99,10 @@ const App = () => {
   }, [filter, todos])
 
   return (
-    <>
-      {isEditable ? (
+  <>
+  <Title />
+  
+  {isEditable ? (
         <>
           <input
             type="text"
@@ -110,6 +114,7 @@ const App = () => {
         </>
       ) : (
         <>
+        <InputForm />
         <input
             type="text"
             value={todoTitle}
@@ -143,7 +148,7 @@ const App = () => {
           </li>
         ))}
       </ul>
-    </>
+      </>
   )
 }
 

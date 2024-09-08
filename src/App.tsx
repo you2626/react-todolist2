@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import Title from './components/Title';
 import InputForm from './components/InputForm';
 import "./App.css";
+import AddForm from './components/AddForm';
 
 interface Todo {
   id: number;
@@ -105,13 +106,12 @@ const App = () => {
   
   {isEditable ? (
         <>
-          <input
-            type="text"
-            value={newTitle}
-            onChange={handleEditFormChanges}
-          />
-          <button onClick={handleEditTodo}>編集を保存</button>
-          <button onClick={handleCloseEditForm}>キャンセル</button>
+        <AddForm
+        newTitle={newTitle}
+        handleEditFormChanges={handleEditFormChanges}
+        handleEditTodo={handleEditTodo}
+        handleCloseEditForm={handleCloseEditForm}
+      />
         </>
       ) : (
         <>
@@ -119,13 +119,8 @@ const App = () => {
                     todoTitle={todoTitle}
                     handleAddFormChanges={handleAddFormChanges}
                     handleAddTodo={handleAddTodo}
-                />
-        <input
-            type="text"
-            value={todoTitle}
-            onChange={handleAddFormChanges}
-          />
-          <button onClick={handleAddTodo}>作成</button>
+                    />
+        
         </>
       )}
 

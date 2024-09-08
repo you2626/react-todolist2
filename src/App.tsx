@@ -1,6 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react';
 import Title from './components/Title';
 import InputForm from './components/InputForm';
+import "./App.css";
 
 interface Todo {
   id: number;

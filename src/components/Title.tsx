@@ -1,6 +1,8 @@
+import "./Title.css";
+
 const Title=()=>{
     return(
-        <div>
+        <div className="todolist">
             <h1>TODOリスト</h1>
         </div>
     );

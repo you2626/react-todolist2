@@ -1,0 +1,10 @@
+.todolist {
+    text-align: center;
+    margin: 20px;
+}
+
+.todolist h1 {
+    color:#66cccc;
+    font-size: 2rem;
+    font-family: Arial, sans-serif;
+}                                                                                         

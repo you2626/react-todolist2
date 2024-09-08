@@ -115,7 +115,11 @@ const App = () => {
         </>
       ) : (
         <>
-        <InputForm />
+        <InputForm
+                    todoTitle={todoTitle}
+                    handleAddFormChanges={handleAddFormChanges}
+                    handleAddTodo={handleAddTodo}
+                />
         <input
             type="text"
             value={todoTitle}

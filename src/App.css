@@ -1,43 +1,41 @@
-.app {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
+body {
+  font-family: Arial, sans-serif;
 }
 
-.app ul {
+h1 {
+  color: #333;
+}
+
+input {
+  padding: 8px;
+  margin-right: 8px;
+}
+
+button {
+  padding: 8px 12px;
+  margin: 4px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+ul {
   list-style-type: none;
   padding: 0;
 }
 
-.app li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.app li span {
-  flex: 1;
-}
-
-.app li select {
-  margin-left: 10px;
-  padding: 5px;
+li {
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #ddd;
   border-radius: 4px;
 }
 
-.app li button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  font-size: 0.9rem;
-  border: none;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #dc3545;
-  cursor: pointer;
-}
-
-.app li button:hover {
-  background-color: #c82333;
+select {
+  margin-right: 8px;
 }

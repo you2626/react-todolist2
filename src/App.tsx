@@ -4,6 +4,7 @@ import InputForm from './components/InputForm';
 import "./App.css";
 import AddForm from './components/AddForm';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { Button } from '@mui/material';
 
 interface Todo {
@@ -145,12 +146,23 @@ const App = () => {
               <option value="inProgress">作業中</option>
               <option value="done">完了</option>
             </select>
-            <button onClick={() => handleOpenEditForm(todo)}>編集</button>
+
+            <Button
+            onClick={() => handleOpenEditForm(todo)}
+            variant="contained"
+            color="primary"
+            startIcon={<EditIcon />}
+            sx={{ mr: 1 }} 
+            >
+              編集
+              </Button>
+            
             <Button
             onClick={() => handleDeleteTodo(todo)}
             variant="contained"
             color="primary"
             startIcon={<DeleteIcon />}
+            sx={{ mr: 1 }} 
             >
               削除
               </Button>

@@ -2,18 +2,12 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import Title from './components/Title';
 import InputForm from './components/InputForm';
 import "./App.css";
+import { Todo, Filter } from './types/types';
 import AddForm from './components/AddForm';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button } from '@mui/material';
 
-interface Todo {
-  id: number;
-  title: string;
-  status: 'notStarted' | 'inProgress' | 'done';
-}
-
-type Filter = 'all' | 'notStarted' | 'inProgress' | 'done';
 
 
 const App = () => {

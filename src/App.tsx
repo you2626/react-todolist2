@@ -34,9 +34,7 @@ const App = () => {
     setNewTitle(e.target.value)
   };
 
-  const resetFormInput = () => {
-    setTodoTitle('');
-  };
+
 
   const handleOpenEditForm = (todo:Todo) => {
     setIsEditable(true);
@@ -50,10 +48,15 @@ const App = () => {
   }
 
   const handleAddTodo = () => {
+    if(todoTitle === ""){
+      return
+    };
     setTodos([...todos, { id: todoId, title: todoTitle, status: 'notStarted' }]);
     setTodoId(todoId + 1);
-    resetFormInput();
+    setTodoTitle('');
+   
   };
+ 
 
   const handleDeleteTodo = (targetTodo:Todo) => {
     setTodos(todos.filter((todo) => todo.id !== targetTodo.id));
